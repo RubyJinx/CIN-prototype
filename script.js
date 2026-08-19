@@ -1,46 +1,22 @@
-const screens = document.querySelectorAll('.screen');
-const navButtons = document.querySelectorAll('.bottom-nav button');
-
-function showScreen(id) {
-  screens.forEach(screen => {
-    screen.classList.toggle('active', screen.id === id);
-  });
-
-  navButtons.forEach(btn => {
-    const tab = btn.dataset.tab;
-    const activeTab = id === 'event-detail' ? 'events' : id;
-    btn.classList.toggle('active', tab === activeTab);
-  });
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-document.addEventListener('click', (event) => {
-  const trigger = event.target.closest('[data-go]');
-  if (!trigger) return;
-  showScreen(trigger.dataset.go);
-});
-
-const searchInput = document.getElementById('eventSearch');
-const eventCards = document.querySelectorAll('#eventList .event-card');
-
-searchInput.addEventListener('input', () => {
-  const query = searchInput.value.trim().toLowerCase();
-
-  eventCards.forEach(card => {
-    const haystack = card.dataset.search.toLowerCase();
-    card.style.display = haystack.includes(query) ? 'block' : 'none';
-  });
-});
-
-document.getElementById('rsvpBtn').addEventListener('click', () => {
-  document.getElementById('statusMessage').textContent =
-    'RSVP recorded for prototype testing.';
-});
-
-document.getElementById('calendarBtn').addEventListener('click', () => {
-  document.getElementById('statusMessage').textContent =
-    'Calendar action simulated for prototype testing.';
-});
-
-showScreen('home');
+const events=[{id:"grip",title:"Grip, Clip, Climb",host:"Climbing Club",date:"August 18, 2026",dateShort:"Aug 18, 2026",day:18,time:"10:00 AM - 4:00 PM",timeShort:"10:00 AM",location:"CWU Recreation Center",category:"recreation",timeOfDay:"morning",description:"Grip, Clip, Climb is a climbing event where students can participate, meet other students, and connect with the Climbing Club."},{id:"welcome",title:"Wildcat Welcome Social",host:"Campus Activities",date:"August 20, 2026",dateShort:"Aug 20, 2026",day:20,time:"5:00 PM - 7:00 PM",timeShort:"5:00 PM",location:"SURC Ballroom",category:"social",timeOfDay:"evening",description:"Meet other Wildcats, learn about campus activities, and connect with student organizations at a casual welcome event."},{id:"career",title:"Student Career Meetup",host:"Career Services",date:"August 21, 2026",dateShort:"Aug 21, 2026",day:21,time:"2:00 PM - 4:00 PM",timeShort:"2:00 PM",location:"Samuelson 104",category:"career",timeOfDay:"afternoon",description:"A casual networking event for students who want to learn about internships, campus jobs, and career resources."}];
+const organizations=[{id:"climbing",name:"Climbing Club",category:"recreation",categoryLabel:"Sports & Recreation",description:"The Climbing Club connects CWU students who are interested in climbing, outdoor recreation, skill-building, and meeting other students.",meeting:"Tuesdays • 6:00 PM • SURC 137",contact:"climbingclub@cwu.edu",featuredEvent:"grip"},{id:"gaming",name:"CWU Gaming Club",category:"recreation",categoryLabel:"Recreation",description:"A student community for casual and competitive gaming, tabletop nights, and social events.",meeting:"Thursdays • 7:00 PM • SURC 201",contact:"gamingclub@cwu.edu",featuredEvent:null},{id:"ai",name:"AI & Emerging Tech Club",category:"academic",categoryLabel:"Academic",description:"Students exploring artificial intelligence, emerging technologies, projects, and career pathways.",meeting:"Wednesdays • 5:30 PM • Samuelson 116",contact:"aitech@cwu.edu",featuredEvent:null},{id:"arts",name:"Wildcat Arts Collective",category:"arts",categoryLabel:"Arts & Culture",description:"A creative student organization for art, design, performance, and collaborative campus projects.",meeting:"Mondays • 4:00 PM • Randall Hall",contact:"artscollective@cwu.edu",featuredEvent:null}];
+let currentEventId="grip",currentOrgId="climbing";
+const screens=document.querySelectorAll(".screen"),navButtons=document.querySelectorAll(".bottom-nav button");
+function showScreen(id){screens.forEach(s=>s.classList.toggle("active",s.id===id));navButtons.forEach(btn=>{const tab=btn.dataset.tab;const activeTab=id==="event-detail"||id==="calendar"?"events":id==="organization-detail"||id==="interest"?"organizations":id;btn.classList.toggle("active",tab===activeTab)});closeDrawer();window.scrollTo({top:0,behavior:"smooth"})}
+function openDrawer(){drawer.classList.add("open");drawer.setAttribute("aria-hidden","false");drawerScrim.hidden=false;menuBtn.setAttribute("aria-expanded","true")}
+function closeDrawer(){drawer.classList.remove("open");drawer.setAttribute("aria-hidden","true");drawerScrim.hidden=true;menuBtn.setAttribute("aria-expanded","false")}
+menuBtn.addEventListener("click",openDrawer);closeMenuBtn.addEventListener("click",closeDrawer);drawerScrim.addEventListener("click",closeDrawer);document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer()});
+document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g){showScreen(g.dataset.go);return}const ev=e.target.closest("[data-event]");if(ev){openEvent(ev.dataset.event);return}const org=e.target.closest("[data-org]");if(org)openOrganization(org.dataset.org)});
+function openEvent(id){currentEventId=id;const item=events.find(e=>e.id===id);if(!item)return;eventDetailTitle.textContent=item.title;eventDetailCard.innerHTML=`<strong>Hosted by: ${item.host}</strong><div>${item.date}</div><div>${item.time}</div><div>${item.location}</div><h3>About This Event:</h3><p>${item.description}</p>`;statusMessage.textContent="";showScreen("event-detail")}
+function openOrganization(id){currentOrgId=id;const org=organizations.find(o=>o.id===id);if(!org)return;const featured=events.find(e=>e.id===org.featuredEvent);orgDetailTitle.textContent=org.name;orgDetailCard.innerHTML=`<strong>${org.categoryLabel}</strong><h3>About This Organization:</h3><p>${org.description}</p><h3>Meeting Information:</h3><p>${org.meeting}</p><h3>Contact:</h3><p>${org.contact}</p>${featured?`<h3>Upcoming Event:</h3><p><strong>${featured.title}</strong><br>${featured.dateShort} • ${featured.timeShort}</p><button class="mini-btn" data-event="${featured.id}">View Event →</button>`:""}`;interestStatus.textContent="";showScreen("organization-detail")}
+function renderEvents(list=events){eventList.innerHTML=list.map(i=>`<article class="event-card"><strong>${i.title}</strong><div class="card-meta">${i.host}</div><div class="card-meta">${i.dateShort} • ${i.timeShort}</div><div class="card-meta">${i.location}</div><button class="mini-btn" data-event="${i.id}">View Event →</button></article>`).join("");eventEmpty.hidden=list.length!==0}
+function getFilteredEvents(){const search=eventSearch.value.trim().toLowerCase(),cats=[...document.querySelectorAll(".category-filter:checked")].map(e=>e.value),times=[...document.querySelectorAll(".time-filter:checked")].map(e=>e.value),date=document.querySelector('input[name="dateFilter"]:checked').value;return events.filter(i=>{const h=`${i.title} ${i.host} ${i.location}`.toLowerCase();let md=true;if(date==="today")md=i.day===18;if(date==="week")md=i.day>=18&&i.day<=24;return(!search||h.includes(search))&&(cats.length===0||cats.includes(i.category))&&(times.length===0||times.includes(i.timeOfDay))&&md})}
+eventSearch.addEventListener("input",()=>renderEvents(getFilteredEvents()));filtersBtn.addEventListener("click",()=>{const open=!filtersPanel.hidden;filtersPanel.hidden=open;filtersBtn.setAttribute("aria-expanded",String(!open))});applyFiltersBtn.addEventListener("click",()=>{renderEvents(getFilteredEvents());filtersPanel.hidden=true;filtersBtn.setAttribute("aria-expanded","false")});clearFiltersBtn.addEventListener("click",()=>{document.querySelectorAll(".category-filter,.time-filter").forEach(e=>e.checked=false);document.querySelector('input[name="dateFilter"][value="all"]').checked=true;renderEvents()});
+function renderOrganizations(list=organizations){orgList.innerHTML=list.map(o=>`<article class="org-card"><strong>${o.name}</strong><div class="card-meta">${o.categoryLabel}</div><p>${o.description}</p><button class="mini-btn" data-org="${o.id}">View Organization →</button></article>`).join("");orgEmpty.hidden=list.length!==0}
+function getFilteredOrganizations(){const search=orgSearch.value.trim().toLowerCase(),cats=[...document.querySelectorAll(".org-category-filter:checked")].map(e=>e.value);return organizations.filter(o=>{const h=`${o.name} ${o.categoryLabel} ${o.description}`.toLowerCase();return(!search||h.includes(search))&&(cats.length===0||cats.includes(o.category))})}
+orgSearch.addEventListener("input",()=>renderOrganizations(getFilteredOrganizations()));orgFiltersBtn.addEventListener("click",()=>{const open=!orgFiltersPanel.hidden;orgFiltersPanel.hidden=open;orgFiltersBtn.setAttribute("aria-expanded",String(!open))});applyOrgFiltersBtn.addEventListener("click",()=>{renderOrganizations(getFilteredOrganizations());orgFiltersPanel.hidden=true;orgFiltersBtn.setAttribute("aria-expanded","false")});clearOrgFiltersBtn.addEventListener("click",()=>{document.querySelectorAll(".org-category-filter").forEach(e=>e.checked=false);renderOrganizations()});
+rsvpBtn.addEventListener("click",()=>{const e=events.find(x=>x.id===currentEventId);statusMessage.textContent=`RSVP recorded for ${e.title} in prototype testing.`});calendarBtn.addEventListener("click",()=>{const e=events.find(x=>x.id===currentEventId);statusMessage.textContent=`${e.title} was added to the prototype calendar.`});interestBtn.addEventListener("click",()=>showScreen("interest"));interestForm.addEventListener("submit",e=>{e.preventDefault();const o=organizations.find(x=>x.id===currentOrgId);interestFormStatus.textContent=`✓ Your interest in ${o.name} has been recorded for prototype testing.`;e.target.reset()});
+function renderCalendar(){const weekdays=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];let html=weekdays.map(d=>`<div class="weekday">${d}</div>`).join("");for(let i=0;i<6;i++)html+="<div></div>";for(let d=1;d<=31;d++){const has=events.some(e=>e.day===d);html+=`<button class="calendar-day ${has?"has-event":""}" data-calendar-day="${d}">${d}</button>`}calendarGrid.innerHTML=html}
+calendarGrid.addEventListener("click",e=>{const btn=e.target.closest("[data-calendar-day]");if(!btn)return;document.querySelectorAll(".calendar-day").forEach(d=>d.classList.remove("selected"));btn.classList.add("selected");const day=Number(btn.dataset.calendarDay),dayEvents=events.filter(i=>i.day===day);calendarDayDetails.innerHTML=dayEvents.length?`<strong>August ${day}</strong>${dayEvents.map(i=>`<p><strong>${i.title}</strong><br>${i.timeShort}<br>${i.location}<br><button class="mini-btn" data-event="${i.id}">View Event →</button></p>`).join("")}`:`<strong>August ${day}</strong><p>No CIN events are listed for this day.</p>`});
+globalSearchForm.addEventListener("submit",e=>{e.preventDefault();const raw=globalSearch.value.trim(),q=raw.toLowerCase(),matchedEvents=events.filter(i=>`${i.title} ${i.host} ${i.location} ${i.description}`.toLowerCase().includes(q)),matchedOrgs=organizations.filter(o=>`${o.name} ${o.categoryLabel} ${o.description}`.toLowerCase().includes(q));searchSummary.textContent=q?`Results for “${raw}”`:"Showing all results";globalResults.innerHTML=`<h2 class="result-group-title">Events</h2>${matchedEvents.length?matchedEvents.map(i=>`<article class="event-card"><strong>${i.title}</strong><div>${i.dateShort} • ${i.timeShort}</div><div>${i.location}</div><button class="mini-btn" data-event="${i.id}">View Event →</button></article>`).join(""):"<p>No matching events.</p>"}<h2 class="result-group-title">Organizations</h2>${matchedOrgs.length?matchedOrgs.map(o=>`<article class="org-card"><strong>${o.name}</strong><div>${o.categoryLabel}</div><button class="mini-btn" data-org="${o.id}">View Organization →</button></article>`).join(""):"<p>No matching organizations.</p>"}`;showScreen("search-results")});
+renderEvents();renderOrganizations();renderCalendar();showScreen("home");

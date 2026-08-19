@@ -7,26 +7,41 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="phone-shell">
-
+  <main class="phone-shell" id="app">
     <header class="topbar">
       <div class="brand">
         <div class="brand-short">CIN</div>
         <div class="brand-long">Central Involvement Network</div>
       </div>
-      <button class="menu-btn" aria-label="Open menu">☰</button>
+      <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false">☰</button>
     </header>
+
+    <aside class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer-header">
+        <strong>CIN Menu</strong>
+        <button id="closeMenuBtn" aria-label="Close navigation menu">✕</button>
+      </div>
+      <button data-go="home">Home</button>
+      <button data-go="events">Events</button>
+      <button data-go="organizations">Organizations</button>
+      <button data-go="calendar">Calendar</button>
+      <hr />
+      <button data-go="about">About CIN</button>
+      <button data-go="help">Help / FAQ</button>
+    </aside>
+    <div class="drawer-scrim" id="drawerScrim" hidden></div>
 
     <section id="home" class="screen active">
       <div class="hero">
         <h1>Discover What's<br />Happening at<br />CWU</h1>
-        <p>Find student events,<br />organizations, and opportunities<br />to get involved on campus.</p>
+        <p>Find student events, organizations, and opportunities to get involved on campus.</p>
       </div>
 
-      <button class="search-card" data-go="events">
-        <span>Search events &amp;<br />organizations</span>
-        <span class="search-icon">⌕</span>
-      </button>
+      <form class="search-card home-search" id="globalSearchForm">
+        <label class="sr-only" for="globalSearch">Search events and organizations</label>
+        <input id="globalSearch" type="search" placeholder="Search events & organizations" />
+        <button type="submit" class="search-submit" aria-label="Search">⌕</button>
+      </form>
 
       <button class="primary wide" data-go="events">Browse Events</button>
       <button class="primary wide" data-go="organizations">Explore Organizations</button>
@@ -37,105 +52,161 @@
         <div>Climbing Club</div>
         <div>Aug 18, 2026 • 10:00 AM</div>
         <div>CWU Recreation Center</div>
-        <button class="mini-btn" data-go="event-detail">View Event →</button>
+        <button class="mini-btn" data-event="grip">View Event →</button>
       </article>
 
       <h2 class="section-title small-gap">Featured Organization</h2>
       <article class="card compact">
         <strong>Climbing Club</strong>
-        <div>Sports &amp; Recreation</div>
+        <div>Sports & Recreation</div>
         <p>Connect with students interested in climbing and outdoor recreation.</p>
-        <button class="mini-btn" data-go="organizations">View Organization →</button>
+        <button class="mini-btn" data-org="climbing">View Organization →</button>
       </article>
+    </section>
+
+    <section id="search-results" class="screen">
+      <button class="back-btn" data-go="home">← Back to Home</button>
+      <h1 class="page-title">Search Results</h1>
+      <p class="search-summary" id="searchSummary"></p>
+      <div id="globalResults"></div>
     </section>
 
     <section id="events" class="screen">
       <h1 class="page-title">Events</h1>
-
       <div class="search-bar">
-        <span class="glass">⌕</span>
-        <input type="text" id="eventSearch" placeholder="Search Events" />
+        <span class="glass" aria-hidden="true">⌕</span>
+        <label class="sr-only" for="eventSearch">Search events</label>
+        <input type="search" id="eventSearch" placeholder="Search Events" />
       </div>
-
       <div class="action-row">
-        <button class="primary action-btn">Filters⌄</button>
-        <button class="primary action-btn">Calendar</button>
+        <button class="primary action-btn" id="filtersBtn" aria-expanded="false">Filters⌄</button>
+        <button class="primary action-btn" data-go="calendar">Calendar</button>
       </div>
-
+      <section class="filters-panel" id="filtersPanel" hidden>
+        <fieldset>
+          <legend>Date</legend>
+          <label><input type="radio" name="dateFilter" value="all" checked /> All</label>
+          <label><input type="radio" name="dateFilter" value="today" /> Today</label>
+          <label><input type="radio" name="dateFilter" value="week" /> This Week</label>
+          <label><input type="radio" name="dateFilter" value="month" /> This Month</label>
+        </fieldset>
+        <fieldset>
+          <legend>Category</legend>
+          <label><input type="checkbox" class="category-filter" value="recreation" /> Recreation</label>
+          <label><input type="checkbox" class="category-filter" value="social" /> Social</label>
+          <label><input type="checkbox" class="category-filter" value="academic" /> Academic</label>
+          <label><input type="checkbox" class="category-filter" value="career" /> Career</label>
+          <label><input type="checkbox" class="category-filter" value="volunteer" /> Volunteer</label>
+        </fieldset>
+        <fieldset>
+          <legend>Time</legend>
+          <label><input type="checkbox" class="time-filter" value="morning" /> Morning</label>
+          <label><input type="checkbox" class="time-filter" value="afternoon" /> Afternoon</label>
+          <label><input type="checkbox" class="time-filter" value="evening" /> Evening</label>
+        </fieldset>
+        <div class="filter-actions">
+          <button class="primary" id="applyFiltersBtn">Apply Filters</button>
+          <button class="secondary" id="clearFiltersBtn">Clear</button>
+        </div>
+      </section>
       <h2 class="list-heading">All Events</h2>
+      <div id="eventList"></div>
+      <p id="eventEmpty" class="empty-state" hidden>No events match those filters.</p>
+    </section>
 
-      <div id="eventList">
-        <article class="event-card" data-search="grip clip climb climbing club">
-          <strong>Grip, Clip, Climb</strong>
-          <div>Climbing Club</div>
-          <div>Aug 18, 2026 • 10:00 AM</div>
-          <div>CWU Recreation Center</div>
-          <button class="mini-btn" data-go="event-detail">View Event →</button>
-        </article>
-
-        <article class="event-card" data-search="wildcat welcome social campus activities">
-          <strong>Wildcat Welcome Social</strong>
-          <div>Campus Activities</div>
-          <div>Aug 20, 2026 • 5:00 PM</div>
-          <div>SURC Ballroom</div>
-          <button class="mini-btn" data-go="event-detail">View Event →</button>
-        </article>
+    <section id="calendar" class="screen">
+      <button class="back-btn" data-go="events">← Back to Events</button>
+      <h1 class="page-title">August 2026</h1>
+      <div class="calendar-toggle">
+        <button class="secondary" data-go="events">List</button>
+        <button class="primary" aria-current="page">Calendar</button>
       </div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+      <h2 class="list-heading">Selected Day</h2>
+      <div id="calendarDayDetails" class="card compact">Select a highlighted date to see events.</div>
     </section>
 
     <section id="event-detail" class="screen">
       <button class="back-btn" data-go="events">← Back to Events</button>
-
-      <h1 class="detail-title">Grip, Clip, Climb</h1>
-
-      <article class="detail-card">
-        <strong>Hosted by: Climbing Club</strong>
-        <div>August 18, 2026</div>
-        <div>10:00 AM - 4:00 PM</div>
-        <div>CWU Recreation Center</div>
-
-        <h3>About This Event:</h3>
-        <p>
-          Grip, Clip, Climb is a climbing event where students can participate,
-          meet other students, and connect with the Climbing Club.
-        </p>
-      </article>
-
+      <h1 class="detail-title" id="eventDetailTitle"></h1>
+      <article class="detail-card" id="eventDetailCard"></article>
       <button class="primary detail-action" id="rsvpBtn">RSVP</button>
       <button class="primary detail-action" id="calendarBtn">Add to Calendar</button>
       <p id="statusMessage" class="status-message" aria-live="polite"></p>
     </section>
 
     <section id="organizations" class="screen">
-      <button class="back-btn" data-go="home">← Back to Home</button>
-
-      <h1 class="detail-title">Organizations</h1>
-
-      <article class="detail-card">
-        <strong>Climbing Club</strong>
-        <div>Sports &amp; Recreation</div>
-
-        <h3>About This Organization:</h3>
-        <p>
-          The Climbing Club connects CWU students who are interested in climbing,
-          outdoor recreation, skill-building, and meeting other students.
-        </p>
-
-        <h3>Featured Event:</h3>
-        <p><strong>Grip, Clip, Climb</strong><br />August 18, 2026 • 10:00 AM</p>
-      </article>
-
-      <button class="primary detail-action" data-go="event-detail">View Featured Event</button>
+      <h1 class="page-title">Organizations</h1>
+      <div class="search-bar">
+        <span class="glass" aria-hidden="true">⌕</span>
+        <label class="sr-only" for="orgSearch">Search organizations</label>
+        <input type="search" id="orgSearch" placeholder="Search Organizations" />
+      </div>
+      <div class="action-row single">
+        <button class="primary action-btn" id="orgFiltersBtn" aria-expanded="false">Filters⌄</button>
+      </div>
+      <section class="filters-panel" id="orgFiltersPanel" hidden>
+        <fieldset>
+          <legend>Category</legend>
+          <label><input type="checkbox" class="org-category-filter" value="recreation" /> Recreation</label>
+          <label><input type="checkbox" class="org-category-filter" value="academic" /> Academic</label>
+          <label><input type="checkbox" class="org-category-filter" value="arts" /> Arts & Culture</label>
+          <label><input type="checkbox" class="org-category-filter" value="service" /> Service</label>
+        </fieldset>
+        <div class="filter-actions">
+          <button class="primary" id="applyOrgFiltersBtn">Apply Filters</button>
+          <button class="secondary" id="clearOrgFiltersBtn">Clear</button>
+        </div>
+      </section>
+      <h2 class="list-heading">All Organizations</h2>
+      <div id="orgList"></div>
+      <p id="orgEmpty" class="empty-state" hidden>No organizations match those filters.</p>
     </section>
 
-    <nav class="bottom-nav">
+    <section id="organization-detail" class="screen">
+      <button class="back-btn" data-go="organizations">← Back to Organizations</button>
+      <h1 class="detail-title" id="orgDetailTitle"></h1>
+      <article class="detail-card" id="orgDetailCard"></article>
+      <button class="primary detail-action" id="interestBtn">I'm Interested</button>
+      <p id="interestStatus" class="status-message" aria-live="polite"></p>
+    </section>
+
+    <section id="interest" class="screen">
+      <button class="back-btn" data-go="organization-detail">← Back to Organization</button>
+      <h1 class="page-title">I'm Interested</h1>
+      <form class="interest-form" id="interestForm">
+        <p>We'll connect you with the organization.</p>
+        <label for="interestName">Name</label>
+        <input id="interestName" type="text" required />
+        <label for="interestEmail">Email</label>
+        <input id="interestEmail" type="email" required />
+        <button class="primary wide form-submit" type="submit">Send Interest</button>
+      </form>
+      <p id="interestFormStatus" class="status-message" aria-live="polite"></p>
+    </section>
+
+    <section id="about" class="screen">
+      <button class="back-btn" data-go="home">← Back to Home</button>
+      <h1 class="page-title">About CIN</h1>
+      <article class="detail-card"><p>The Central Involvement Network is a prototype designed to help CWU students discover events, organizations, and ways to get involved from one central place.</p></article>
+    </section>
+
+    <section id="help" class="screen">
+      <button class="back-btn" data-go="home">← Back to Home</button>
+      <h1 class="page-title">Help / FAQ</h1>
+      <article class="detail-card">
+        <h3>How do I find events?</h3><p>Use search, filters, or the calendar view.</p>
+        <h3>How do I find organizations?</h3><p>Browse the organization directory and open a group for more information.</p>
+        <h3>Does RSVP actually submit?</h3><p>This is a prototype, so actions are simulated for testing.</p>
+      </article>
+    </section>
+
+    <nav class="bottom-nav" aria-label="Primary navigation">
       <button data-go="home" data-tab="home">⌂ Home</button>
       <button data-go="events" data-tab="events">▣ Events</button>
       <button data-go="organizations" data-tab="organizations">♟ Clubs</button>
     </nav>
-
   </main>
-
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,27 +1,27 @@
-# CIN Prototype
+# CIN Expanded Prototype
 
-Static mobile-first prototype based on the current Central Involvement Network mockups.
+This version extends the original Central Involvement Network prototype while keeping the same visual language.
 
-## Files
-- `index.html`
-- `styles.css`
-- `script.js`
+## Added interactions
+- Event filters
+- Event search
+- Calendar view
+- Organization directory
+- Organization filters
+- Organization detail pages
+- "I'm Interested" flow
+- Global search across events and organizations
+- Functional hamburger menu
+- Simulated RSVP and Add to Calendar actions
+- Accessibility improvements including labels, keyboard focus states, semantic controls, and Escape-to-close menu
 
-## Run locally
-Open `index.html` in a browser.
+## Update GitHub
+Replace the existing `index.html`, `styles.css`, and `script.js` with these versions, then run:
 
-## GitHub Pages
-1. Upload these files to the root of a GitHub repository.
-2. Open **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**.
-4. Select `main` and `/ (root)`.
-5. Save.
+```powershell
+git add .
+git commit -m "Expand CIN prototype interactions"
+git push
+```
 
-The prototype includes:
-- Home screen
-- Events screen
-- Search filtering
-- Event detail screen
-- Organizations screen
-- Working bottom navigation
-- Simulated RSVP and Add to Calendar interactions
+GitHub Pages should redeploy automatically.
