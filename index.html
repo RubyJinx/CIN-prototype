@@ -8,6 +8,7 @@
 </head>
 <body>
   <main class="phone-shell" id="app">
+
     <header class="topbar">
       <div class="brand">
         <div class="brand-short">CIN</div>
@@ -15,6 +16,10 @@
       </div>
       <button class="menu-btn" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false">☰</button>
     </header>
+
+    <div class="prototype-banner" role="note">
+      <strong>Prototype Notice:</strong> Events, organizations, dates, contact information, and other content shown here are fictional and are included for demonstration and usability testing only.
+    </div>
 
     <aside class="drawer" id="drawer" aria-hidden="true">
       <div class="drawer-header">
@@ -25,6 +30,7 @@
       <button data-go="events">Events</button>
       <button data-go="organizations">Organizations</button>
       <button data-go="calendar">Calendar</button>
+      <button data-go="submit-event">Submit an Event</button>
       <hr />
       <button data-go="about">About CIN</button>
       <button data-go="help">Help / FAQ</button>
@@ -45,6 +51,7 @@
 
       <button class="primary wide" data-go="events">Browse Events</button>
       <button class="primary wide" data-go="organizations">Explore Organizations</button>
+      <button class="secondary wide" data-go="submit-event">Submit an Event</button>
 
       <h2 class="section-title">Upcoming Events</h2>
       <article class="card compact">
@@ -73,15 +80,18 @@
 
     <section id="events" class="screen">
       <h1 class="page-title">Events</h1>
+
       <div class="search-bar">
         <span class="glass" aria-hidden="true">⌕</span>
         <label class="sr-only" for="eventSearch">Search events</label>
         <input type="search" id="eventSearch" placeholder="Search Events" />
       </div>
+
       <div class="action-row">
         <button class="primary action-btn" id="filtersBtn" aria-expanded="false">Filters⌄</button>
         <button class="primary action-btn" data-go="calendar">Calendar</button>
       </div>
+
       <section class="filters-panel" id="filtersPanel" hidden>
         <fieldset>
           <legend>Date</legend>
@@ -90,6 +100,7 @@
           <label><input type="radio" name="dateFilter" value="week" /> This Week</label>
           <label><input type="radio" name="dateFilter" value="month" /> This Month</label>
         </fieldset>
+
         <fieldset>
           <legend>Category</legend>
           <label><input type="checkbox" class="category-filter" value="recreation" /> Recreation</label>
@@ -97,18 +108,23 @@
           <label><input type="checkbox" class="category-filter" value="academic" /> Academic</label>
           <label><input type="checkbox" class="category-filter" value="career" /> Career</label>
           <label><input type="checkbox" class="category-filter" value="volunteer" /> Volunteer</label>
+          <label><input type="checkbox" class="category-filter" value="arts" /> Arts & Culture</label>
+          <label><input type="checkbox" class="category-filter" value="other" /> Other</label>
         </fieldset>
+
         <fieldset>
           <legend>Time</legend>
           <label><input type="checkbox" class="time-filter" value="morning" /> Morning</label>
           <label><input type="checkbox" class="time-filter" value="afternoon" /> Afternoon</label>
           <label><input type="checkbox" class="time-filter" value="evening" /> Evening</label>
         </fieldset>
+
         <div class="filter-actions">
           <button class="primary" id="applyFiltersBtn">Apply Filters</button>
           <button class="secondary" id="clearFiltersBtn">Clear</button>
         </div>
       </section>
+
       <h2 class="list-heading">All Events</h2>
       <div id="eventList"></div>
       <p id="eventEmpty" class="empty-state" hidden>No events match those filters.</p>
@@ -117,13 +133,18 @@
     <section id="calendar" class="screen">
       <button class="back-btn" data-go="events">← Back to Events</button>
       <h1 class="page-title">August 2026</h1>
+
       <div class="calendar-toggle">
         <button class="secondary" data-go="events">List</button>
         <button class="primary" aria-current="page">Calendar</button>
       </div>
+
       <div class="calendar-grid" id="calendarGrid"></div>
+
       <h2 class="list-heading">Selected Day</h2>
-      <div id="calendarDayDetails" class="card compact">Select a highlighted date to see events.</div>
+      <div id="calendarDayDetails" class="card compact">
+        Select a highlighted date to see events.
+      </div>
     </section>
 
     <section id="event-detail" class="screen">
@@ -137,14 +158,17 @@
 
     <section id="organizations" class="screen">
       <h1 class="page-title">Organizations</h1>
+
       <div class="search-bar">
         <span class="glass" aria-hidden="true">⌕</span>
         <label class="sr-only" for="orgSearch">Search organizations</label>
         <input type="search" id="orgSearch" placeholder="Search Organizations" />
       </div>
+
       <div class="action-row single">
         <button class="primary action-btn" id="orgFiltersBtn" aria-expanded="false">Filters⌄</button>
       </div>
+
       <section class="filters-panel" id="orgFiltersPanel" hidden>
         <fieldset>
           <legend>Category</legend>
@@ -158,6 +182,7 @@
           <button class="secondary" id="clearOrgFiltersBtn">Clear</button>
         </div>
       </section>
+
       <h2 class="list-heading">All Organizations</h2>
       <div id="orgList"></div>
       <p id="orgEmpty" class="empty-state" hidden>No organizations match those filters.</p>
@@ -185,19 +210,102 @@
       <p id="interestFormStatus" class="status-message" aria-live="polite"></p>
     </section>
 
+    <section id="submit-event" class="screen">
+      <button class="back-btn" data-go="home">← Back to Home</button>
+      <h1 class="page-title">Submit an Event</h1>
+
+      <div class="submission-notice" role="note">
+        <strong>Prototype only:</strong> Submissions are simulated and will not be sent to CWU or published to an actual event system.
+      </div>
+
+      <form class="event-form" id="submitEventForm">
+        <label for="eventName">Event Name *</label>
+        <input id="eventName" name="eventName" type="text" required />
+
+        <label for="hostingOrganization">Hosting Organization *</label>
+        <input id="hostingOrganization" name="hostingOrganization" type="text" required />
+
+        <label for="eventDate">Event Date *</label>
+        <input id="eventDate" name="eventDate" type="date" min="2026-08-01" max="2026-08-31" required />
+
+        <div class="form-row">
+          <div>
+            <label for="startTime">Start Time *</label>
+            <input id="startTime" name="startTime" type="time" required />
+          </div>
+          <div>
+            <label for="endTime">End Time</label>
+            <input id="endTime" name="endTime" type="time" />
+          </div>
+        </div>
+
+        <label for="eventLocation">Location *</label>
+        <input id="eventLocation" name="eventLocation" type="text" required />
+
+        <label for="eventCategory">Category *</label>
+        <select id="eventCategory" name="eventCategory" required>
+          <option value="">Select a category</option>
+          <option value="academic">Academic</option>
+          <option value="arts">Arts & Culture</option>
+          <option value="career">Career</option>
+          <option value="recreation">Recreation</option>
+          <option value="social">Social</option>
+          <option value="volunteer">Service / Volunteer</option>
+          <option value="other">Other</option>
+        </select>
+
+        <label for="eventDescription">Event Description *</label>
+        <textarea id="eventDescription" name="eventDescription" rows="5" required></textarea>
+
+        <label for="accessibilityInfo">Accessibility Information / Accommodations</label>
+        <textarea id="accessibilityInfo" name="accessibilityInfo" rows="3" placeholder="Include accessibility information, accommodations, or instructions for requesting accommodations."></textarea>
+
+        <label for="contactEmail">Contact Email *</label>
+        <input id="contactEmail" name="contactEmail" type="email" required />
+
+        <label class="checkbox-label">
+          <input id="eventReviewAck" type="checkbox" required />
+          I understand this prototype simulates an event review process before publication.
+        </label>
+
+        <button class="primary wide form-submit" type="submit">Submit Event</button>
+      </form>
+    </section>
+
+    <section id="event-submitted" class="screen">
+      <div class="success-panel">
+        <div class="success-icon" aria-hidden="true">✓</div>
+        <h1>Event Submitted</h1>
+        <p>Thanks! Your event has been submitted for prototype review.</p>
+        <div id="submittedEventSummary" class="submitted-summary"></div>
+        <p class="prototype-small">This submission exists only in your current browser session and is not sent to CWU.</p>
+        <button class="primary wide" id="viewSubmittedEventBtn">View in Events</button>
+        <button class="secondary wide" id="submitAnotherBtn">Submit Another Event</button>
+        <button class="secondary wide" data-go="home">Return Home</button>
+      </div>
+    </section>
+
     <section id="about" class="screen">
       <button class="back-btn" data-go="home">← Back to Home</button>
       <h1 class="page-title">About CIN</h1>
-      <article class="detail-card"><p>The Central Involvement Network is a prototype designed to help CWU students discover events, organizations, and ways to get involved from one central place.</p></article>
+      <article class="detail-card">
+        <p>The Central Involvement Network is a prototype designed to help CWU students discover events, organizations, and ways to get involved from one central place.</p>
+        <p><strong>All events and organizations shown in this prototype are fictional demonstration content.</strong></p>
+      </article>
     </section>
 
     <section id="help" class="screen">
       <button class="back-btn" data-go="home">← Back to Home</button>
       <h1 class="page-title">Help / FAQ</h1>
       <article class="detail-card">
-        <h3>How do I find events?</h3><p>Use search, filters, or the calendar view.</p>
-        <h3>How do I find organizations?</h3><p>Browse the organization directory and open a group for more information.</p>
-        <h3>Does RSVP actually submit?</h3><p>This is a prototype, so actions are simulated for testing.</p>
+        <h3>How do I find events?</h3>
+        <p>Use search, filters, or the calendar view.</p>
+        <h3>How do I find organizations?</h3>
+        <p>Browse the organization directory and open a group for more information.</p>
+        <h3>Can I submit an event?</h3>
+        <p>Yes. The prototype simulates event submission and temporarily adds the event to the Events list and calendar for testing.</p>
+        <h3>Are these real CWU events and clubs?</h3>
+        <p>No. The content is fictional and exists only for demonstration and usability testing.</p>
       </article>
     </section>
 
@@ -206,7 +314,9 @@
       <button data-go="events" data-tab="events">▣ Events</button>
       <button data-go="organizations" data-tab="organizations">♟ Clubs</button>
     </nav>
+
   </main>
+
   <script src="script.js"></script>
 </body>
 </html>
