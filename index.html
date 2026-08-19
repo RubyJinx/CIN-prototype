@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CIN Prototype</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="phone-shell">
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-short">CIN</div>
+        <div class="brand-long">Central Involvement Network</div>
+      </div>
+      <button class="menu-btn" aria-label="Open menu">☰</button>
+    </header>
+
+    <section id="home" class="screen active">
+      <div class="hero">
+        <h1>Discover What's<br />Happening at<br />CWU</h1>
+        <p>Find student events,<br />organizations, and opportunities<br />to get involved on campus.</p>
+      </div>
+
+      <button class="search-card" data-go="events">
+        <span>Search events &amp;<br />organizations</span>
+        <span class="search-icon">⌕</span>
+      </button>
+
+      <button class="primary wide" data-go="events">Browse Events</button>
+      <button class="primary wide" data-go="organizations">Explore Organizations</button>
+
+      <h2 class="section-title">Upcoming Events</h2>
+      <article class="card compact">
+        <strong>Grip, Clip, Climb</strong>
+        <div>Climbing Club</div>
+        <div>Aug 18, 2026 • 10:00 AM</div>
+        <div>CWU Recreation Center</div>
+        <button class="mini-btn" data-go="event-detail">View Event →</button>
+      </article>
+
+      <h2 class="section-title small-gap">Featured Organization</h2>
+      <article class="card compact">
+        <strong>Climbing Club</strong>
+        <div>Sports &amp; Recreation</div>
+        <p>Connect with students interested in climbing and outdoor recreation.</p>
+        <button class="mini-btn" data-go="organizations">View Organization →</button>
+      </article>
+    </section>
+
+    <section id="events" class="screen">
+      <h1 class="page-title">Events</h1>
+
+      <div class="search-bar">
+        <span class="glass">⌕</span>
+        <input type="text" id="eventSearch" placeholder="Search Events" />
+      </div>
+
+      <div class="action-row">
+        <button class="primary action-btn">Filters⌄</button>
+        <button class="primary action-btn">Calendar</button>
+      </div>
+
+      <h2 class="list-heading">All Events</h2>
+
+      <div id="eventList">
+        <article class="event-card" data-search="grip clip climb climbing club">
+          <strong>Grip, Clip, Climb</strong>
+          <div>Climbing Club</div>
+          <div>Aug 18, 2026 • 10:00 AM</div>
+          <div>CWU Recreation Center</div>
+          <button class="mini-btn" data-go="event-detail">View Event →</button>
+        </article>
+
+        <article class="event-card" data-search="wildcat welcome social campus activities">
+          <strong>Wildcat Welcome Social</strong>
+          <div>Campus Activities</div>
+          <div>Aug 20, 2026 • 5:00 PM</div>
+          <div>SURC Ballroom</div>
+          <button class="mini-btn" data-go="event-detail">View Event →</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="event-detail" class="screen">
+      <button class="back-btn" data-go="events">← Back to Events</button>
+
+      <h1 class="detail-title">Grip, Clip, Climb</h1>
+
+      <article class="detail-card">
+        <strong>Hosted by: Climbing Club</strong>
+        <div>August 18, 2026</div>
+        <div>10:00 AM - 4:00 PM</div>
+        <div>CWU Recreation Center</div>
+
+        <h3>About This Event:</h3>
+        <p>
+          Grip, Clip, Climb is a climbing event where students can participate,
+          meet other students, and connect with the Climbing Club.
+        </p>
+      </article>
+
+      <button class="primary detail-action" id="rsvpBtn">RSVP</button>
+      <button class="primary detail-action" id="calendarBtn">Add to Calendar</button>
+      <p id="statusMessage" class="status-message" aria-live="polite"></p>
+    </section>
+
+    <section id="organizations" class="screen">
+      <button class="back-btn" data-go="home">← Back to Home</button>
+
+      <h1 class="detail-title">Organizations</h1>
+
+      <article class="detail-card">
+        <strong>Climbing Club</strong>
+        <div>Sports &amp; Recreation</div>
+
+        <h3>About This Organization:</h3>
+        <p>
+          The Climbing Club connects CWU students who are interested in climbing,
+          outdoor recreation, skill-building, and meeting other students.
+        </p>
+
+        <h3>Featured Event:</h3>
+        <p><strong>Grip, Clip, Climb</strong><br />August 18, 2026 • 10:00 AM</p>
+      </article>
+
+      <button class="primary detail-action" data-go="event-detail">View Featured Event</button>
+    </section>
+
+    <nav class="bottom-nav">
+      <button data-go="home" data-tab="home">⌂ Home</button>
+      <button data-go="events" data-tab="events">▣ Events</button>
+      <button data-go="organizations" data-tab="organizations">♟ Clubs</button>
+    </nav>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

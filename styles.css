@@ -1,0 +1,296 @@
+:root {
+  --cwu-red: #b5122b;
+  --cwu-red-dark: #9f1025;
+  --light-gray: #f3f3f3;
+  --mid-gray: #8e8e8e;
+  --text: #111;
+  --white: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ececec;
+  color: var(--text);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.phone-shell {
+  width: min(100%, 390px);
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--white);
+  position: relative;
+  padding-bottom: 58px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.04);
+}
+
+.topbar {
+  background: var(--cwu-red);
+  color: white;
+  height: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  text-align: center;
+  line-height: 1.1;
+}
+
+.brand-short {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.brand-long {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 3px;
+}
+
+.menu-btn {
+  position: absolute;
+  right: 18px;
+  top: 15px;
+  border: 0;
+  background: transparent;
+  color: white;
+  font-size: 24px;
+}
+
+.screen {
+  display: none;
+  padding: 18px 20px 24px;
+}
+
+.screen.active {
+  display: block;
+}
+
+.hero {
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 26px;
+  line-height: 1.04;
+  margin: 2px 0 18px;
+}
+
+.hero p {
+  font-size: 15px;
+  text-align: left;
+  width: 88%;
+  margin: 0 auto 18px;
+}
+
+.search-card {
+  width: 75%;
+  margin: 0 auto 16px;
+  border: 0;
+  background: var(--light-gray);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.search-icon,
+.glass {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.primary {
+  border: 0;
+  background: var(--cwu-red);
+  color: white;
+  padding: 10px 14px;
+}
+
+.primary:hover {
+  background: var(--cwu-red-dark);
+}
+
+.wide {
+  display: block;
+  width: 92%;
+  margin: 0 auto 16px;
+  font-size: 17px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 17px;
+  margin: 8px 0 4px;
+}
+
+.small-gap {
+  margin-top: 10px;
+}
+
+.card,
+.event-card,
+.detail-card {
+  background: var(--light-gray);
+}
+
+.card.compact {
+  padding: 7px 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.card.compact p {
+  margin: 3px 0;
+}
+
+.mini-btn {
+  border: 0;
+  background: var(--cwu-red);
+  color: white;
+  font-weight: 700;
+  padding: 5px 8px;
+  margin-top: 5px;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 25px;
+  margin: 2px 0 20px;
+}
+
+.search-bar {
+  width: 72%;
+  margin: 0 auto 36px;
+  background: var(--light-gray);
+  display: flex;
+  align-items: center;
+  padding: 7px 12px;
+  gap: 10px;
+}
+
+.search-bar input {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+
+.action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 94%;
+  margin: 0 auto 18px;
+}
+
+.action-btn {
+  border-right: 1px solid rgba(255,255,255,.35);
+  font-size: 16px;
+}
+
+.list-heading {
+  font-size: 17px;
+  margin: 0 0 8px 8px;
+}
+
+.event-card {
+  padding: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.event-card strong {
+  font-size: 16px;
+}
+
+.back-btn {
+  border: 0;
+  background: var(--cwu-red);
+  color: white;
+  padding: 8px 10px;
+  margin: 4px 0 20px;
+}
+
+.detail-title {
+  text-align: center;
+  font-size: 21px;
+  margin: 0 0 8px;
+}
+
+.detail-card {
+  padding: 12px 24px 90px;
+  min-height: 265px;
+  font-size: 14px;
+}
+
+.detail-card h3 {
+  font-size: 15px;
+  margin-top: 18px;
+}
+
+.detail-action {
+  display: block;
+  width: 56%;
+  margin: 10px 0 0;
+  font-weight: 700;
+}
+
+.status-message {
+  font-size: 14px;
+  margin-top: 10px;
+  min-height: 20px;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 390px);
+  height: 58px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: #8c8c8c;
+  z-index: 20;
+}
+
+.bottom-nav button {
+  border: 0;
+  background: transparent;
+  color: #111;
+  font-weight: 700;
+}
+
+.bottom-nav button.active {
+  background: var(--cwu-red);
+  color: white;
+}
+
+@media (min-width: 700px) {
+  body {
+    padding: 18px 0;
+  }
+
+  .phone-shell {
+    min-height: calc(100vh - 36px);
+  }
+}
