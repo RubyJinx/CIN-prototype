@@ -29,6 +29,7 @@
       <button data-go="home">Home</button>
       <button data-go="events">Events</button>
       <button data-go="organizations">Organizations</button>
+      <button data-go="submit-organization">Submit Your Organization</button>
       <button data-go="calendar">Calendar</button>
       <button data-go="submit-event">Submit an Event</button>
       <hr />
@@ -158,6 +159,8 @@
 
     <section id="organizations" class="screen">
       <h1 class="page-title">Organizations</h1>
+
+      <button class="secondary wide" data-go="submit-organization">Submit Your Organization</button>
 
       <div class="search-bar">
         <span class="glass" aria-hidden="true">⌕</span>
@@ -289,6 +292,77 @@
         <p class="prototype-small">This submission exists only in your current browser session. No event, email, or attached file is actually sent to CWU.</p>
         <button class="primary wide" id="viewSubmittedEventBtn">View in Events</button>
         <button class="secondary wide" id="submitAnotherBtn">Submit Another Event</button>
+        <button class="secondary wide" data-go="home">Return Home</button>
+      </div>
+    </section>
+
+
+    <section id="submit-organization" class="screen">
+      <button class="back-btn" data-go="organizations">← Back to Organizations</button>
+      <h1 class="page-title">Submit Your Organization</h1>
+
+      <div class="submission-notice" role="note">
+        <strong>Prototype only:</strong> Submissions are simulated and will not be sent to CWU or published to an actual organization directory.
+      </div>
+
+      <form class="event-form" id="submitOrganizationForm">
+        <label for="organizationName">Organization Name *</label>
+        <input id="organizationName" name="organizationName" type="text" required />
+
+        <label for="organizationCategory">Category *</label>
+        <select id="organizationCategory" name="organizationCategory" required>
+          <option value="">Select a category</option>
+          <option value="recreation">Recreation</option>
+          <option value="academic">Academic</option>
+          <option value="arts">Arts & Culture</option>
+          <option value="service">Service / Volunteer</option>
+          <option value="other">Other</option>
+        </select>
+
+        <label for="organizationDescription">Organization Description *</label>
+        <textarea id="organizationDescription" name="organizationDescription" rows="5" required></textarea>
+
+        <label for="meetingInfo">Meeting Information *</label>
+        <input id="meetingInfo" name="meetingInfo" type="text" placeholder="Example: Tuesdays • 6:00 PM • SURC 137" required />
+
+        <label for="organizationEmail">Contact Email *</label>
+        <input id="organizationEmail" name="organizationEmail" type="email" required />
+
+        <label for="organizationLink">Website or Social Link</label>
+        <input id="organizationLink" name="organizationLink" type="url" placeholder="https://..." />
+
+        <label for="organizationAccessibility">Accessibility / Accommodations</label>
+        <textarea id="organizationAccessibility" name="organizationAccessibility" rows="3" placeholder="Include accessibility information or instructions for requesting accommodations."></textarea>
+
+        <label for="organizationLogo">Organization Logo / Image (optional)</label>
+        <input id="organizationLogo" name="organizationLogo" type="file" accept="image/*" />
+        <p class="field-help">Prototype only: the selected image is not uploaded. The demo records only the filename.</p>
+
+        <label class="checkbox-label">
+          <input id="organizationReviewAck" type="checkbox" required />
+          I understand this prototype simulates a review process before publication.
+        </label>
+
+        <button class="primary wide form-submit" type="submit">Submit Organization</button>
+      </form>
+    </section>
+
+    <section id="organization-submitted" class="screen">
+      <div class="success-panel">
+        <div class="success-icon" aria-hidden="true">✓</div>
+        <h1>Organization Submitted</h1>
+        <p>Thanks! Your organization has been submitted for prototype review.</p>
+
+        <div class="next-steps" role="note">
+          <strong>What happens next?</strong>
+          <p>In a live CIN system, the contact email would receive an update when the review is complete or if additional information is needed.</p>
+        </div>
+
+        <div id="submittedOrganizationSummary" class="submitted-summary"></div>
+        <p class="prototype-small">This submission exists only in your current browser session. No organization, email, or image is actually sent to CWU.</p>
+
+        <button class="primary wide" id="viewSubmittedOrganizationBtn">View in Organizations</button>
+        <button class="secondary wide" id="submitAnotherOrganizationBtn">Submit Another Organization</button>
         <button class="secondary wide" data-go="home">Return Home</button>
       </div>
     </section>

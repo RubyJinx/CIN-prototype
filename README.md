@@ -1,17 +1,20 @@
-# CIN Prototype — Stakeholder Feedback Update
+# CIN Prototype — Submit Organization Update
 
-This version applies selected findings from the internal/user review while preserving the existing Figma-based visual language and prototype scope.
+This version extends the stakeholder-reviewed CIN prototype with a simulated organization-submission workflow.
 
-## Changes applied from Dulce's review
-- Event host names now link to the matching organization page when that organization exists in the demo data.
-- The event-submission confirmation now explains what a user could expect after review in a live system.
-- Event submission now includes an optional simulated flyer attachment field. The demo records only the selected filename; no file is uploaded.
-- Help / FAQ now includes a fictional Contact Us route for demonstrating support access.
-- Bottom navigation has been visually strengthened without moving it away from the mobile-oriented bottom navigation pattern.
-- Existing fictional-content and prototype disclaimers remain in place.
+## Added
+- "Submit Your Organization" button on the Organizations page
+- "Submit Your Organization" option in the hamburger menu
+- Organization submission form
+- Organization category, description, meeting information, contact email, website/social link, accessibility information, and optional image field
+- Simulated review acknowledgement
+- Confirmation screen with next-step messaging
+- Submitted organizations temporarily appear in the Organizations directory
+- Submitted organizations can be opened like other organization profiles
+- Selected logo/image filename is displayed for prototype testing only
 
 ## Prototype behavior
-This is still a static HTML/CSS/JavaScript prototype. Submitted events and flyer filenames exist only in the current browser session. No event, email, or file is sent to CWU.
+Submitted organizations exist only in the current browser session. No form content, email, image, or organization record is actually sent to CWU.
 
 ## Push to GitHub
 
@@ -19,7 +22,7 @@ Replace the existing project files, then run:
 
 ```powershell
 git add .
-git commit -m "Apply stakeholder review feedback"
+git commit -m "Add organization submission prototype"
 git push
 ```
 

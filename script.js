@@ -95,6 +95,7 @@ const organizations = [
 let currentEventId = "grip";
 let currentOrgId = "climbing";
 let latestSubmittedEventId = null;
+let latestSubmittedOrganizationId = null;
 
 const screens = document.querySelectorAll(".screen");
 const navButtons = document.querySelectorAll(".bottom-nav button");
@@ -106,7 +107,7 @@ function showScreen(id) {
     const tab = btn.dataset.tab;
     const activeTab =
       id === "event-detail" || id === "calendar" || id === "submit-event" || id === "event-submitted" ? "events" :
-      id === "organization-detail" || id === "interest" ? "organizations" :
+      id === "organization-detail" || id === "interest" || id === "submit-organization" || id === "organization-submitted" ? "organizations" :
       id;
     btn.classList.toggle("active", tab === activeTab);
   });
@@ -210,6 +211,11 @@ function openOrganization(id) {
     <h3>Contact:</h3>
     <p>${org.contact}</p>
 
+    ${org.link ? `<h3>Website / Social:</h3><p>${org.link}</p>` : ""}
+    ${org.accessibility ? `<h3>Accessibility / Accommodations:</h3><p>${org.accessibility}</p>` : ""}
+    ${org.logoName ? `<h3>Organization Image:</h3><p>${org.logoName} <em>(prototype filename only)</em></p>` : ""}
+    ${org.submitted ? `<p><strong>Prototype-submitted organization:</strong> This organization was added during the current browser session.</p>` : ""}
+
     ${
       featured
         ? `<h3>Upcoming Event:</h3>
@@ -290,6 +296,7 @@ function renderOrganizations(list = organizations) {
       <strong>${org.name}</strong>
       <div class="card-meta">${org.categoryLabel}</div>
       <p>${org.description}</p>
+      ${org.submitted ? `<div class="card-meta"><em>Prototype-submitted organization</em></div>` : ""}
       <button class="mini-btn" data-org="${org.id}">View Organization →</button>
     </article>
   `).join("");
@@ -527,6 +534,69 @@ document.getElementById("viewSubmittedEventBtn").addEventListener("click", () =>
 
 document.getElementById("submitAnotherBtn").addEventListener("click", () => {
   showScreen("submit-event");
+});
+
+
+function categoryLabelFromValue(value) {
+  const labels = {
+    recreation: "Recreation",
+    academic: "Academic",
+    arts: "Arts & Culture",
+    service: "Service / Volunteer",
+    other: "Other"
+  };
+  return labels[value] || "Other";
+}
+
+document.getElementById("submitOrganizationForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const form = e.currentTarget;
+  const logoFile = form.organizationLogo.files && form.organizationLogo.files[0]
+    ? form.organizationLogo.files[0]
+    : null;
+
+  const id = `submitted-org-${Date.now()}`;
+
+  const newOrganization = {
+    id,
+    name: form.organizationName.value.trim(),
+    category: form.organizationCategory.value,
+    categoryLabel: categoryLabelFromValue(form.organizationCategory.value),
+    description: form.organizationDescription.value.trim(),
+    meeting: form.meetingInfo.value.trim(),
+    contact: form.organizationEmail.value.trim(),
+    link: form.organizationLink.value.trim(),
+    accessibility: form.organizationAccessibility.value.trim(),
+    logoName: logoFile ? logoFile.name : "",
+    featuredEvent: null,
+    submitted: true
+  };
+
+  organizations.push(newOrganization);
+  latestSubmittedOrganizationId = id;
+
+  renderOrganizations();
+
+  document.getElementById("submittedOrganizationSummary").innerHTML = `
+    <strong>${newOrganization.name}</strong>
+    <div>${newOrganization.categoryLabel}</div>
+    <div>${newOrganization.meeting}</div>
+    <div>${newOrganization.contact}</div>
+    ${newOrganization.logoName ? `<div><strong>Image selected:</strong> ${newOrganization.logoName}</div>` : ""}
+  `;
+
+  form.reset();
+  showScreen("organization-submitted");
+});
+
+document.getElementById("viewSubmittedOrganizationBtn").addEventListener("click", () => {
+  if (!latestSubmittedOrganizationId) return showScreen("organizations");
+  openOrganization(latestSubmittedOrganizationId);
+});
+
+document.getElementById("submitAnotherOrganizationBtn").addEventListener("click", () => {
+  showScreen("submit-organization");
 });
 
 renderEvents();
