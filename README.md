@@ -27,3 +27,10 @@ git push
 ```
 
 GitHub Pages should redeploy automatically.
+
+
+## Help / FAQ refinement
+- Expanded Help / FAQ into a more realistic support page.
+- Added explanations for event discovery, organizations, submissions, simulated workflows, and calendar limitations.
+- Added project contact email: Karina.Taylor@cwu.edu.
+- Retained clear prototype disclaimers so users understand CIN is not an official CWU service.
