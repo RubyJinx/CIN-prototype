@@ -260,6 +260,10 @@
         <label for="accessibilityInfo">Accessibility Information / Accommodations</label>
         <textarea id="accessibilityInfo" name="accessibilityInfo" rows="3" placeholder="Include accessibility information, accommodations, or instructions for requesting accommodations."></textarea>
 
+        <label for="eventFlyer">Event Flyer (optional)</label>
+        <input id="eventFlyer" name="eventFlyer" type="file" accept=".pdf,image/*" />
+        <p class="field-help">Prototype only: the selected file is not uploaded. The demo records the filename so the team can test the intended workflow.</p>
+
         <label for="contactEmail">Contact Email *</label>
         <input id="contactEmail" name="contactEmail" type="email" required />
 
@@ -277,8 +281,12 @@
         <div class="success-icon" aria-hidden="true">✓</div>
         <h1>Event Submitted</h1>
         <p>Thanks! Your event has been submitted for prototype review.</p>
+        <div class="next-steps" role="note">
+          <strong>What happens next?</strong>
+          <p>In a live CIN system, the contact email would receive an update when the event review is complete or if additional information is needed.</p>
+        </div>
         <div id="submittedEventSummary" class="submitted-summary"></div>
-        <p class="prototype-small">This submission exists only in your current browser session and is not sent to CWU.</p>
+        <p class="prototype-small">This submission exists only in your current browser session. No event, email, or attached file is actually sent to CWU.</p>
         <button class="primary wide" id="viewSubmittedEventBtn">View in Events</button>
         <button class="secondary wide" id="submitAnotherBtn">Submit Another Event</button>
         <button class="secondary wide" data-go="home">Return Home</button>
@@ -306,6 +314,8 @@
         <p>Yes. The prototype simulates event submission and temporarily adds the event to the Events list and calendar for testing.</p>
         <h3>Are these real CWU events and clubs?</h3>
         <p>No. The content is fictional and exists only for demonstration and usability testing.</p>
+        <h3>Contact Us</h3>
+        <p>In a live CIN system, students and organizations would have a clear contact route for questions, corrections, or support. For this prototype, use <strong>cin-prototype@example.edu</strong> as fictional demonstration contact information.</p>
       </article>
     </section>
 

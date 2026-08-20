@@ -166,8 +166,15 @@ function openEvent(id) {
   if (!item) return;
 
   document.getElementById("eventDetailTitle").textContent = item.title;
+  const hostOrg = organizations.find(
+    org => org.name.toLowerCase() === item.host.toLowerCase()
+  );
+  const hostMarkup = hostOrg
+    ? `<button class="inline-link" data-org="${hostOrg.id}" aria-label="View ${item.host} organization page">${item.host}</button>`
+    : item.host;
+
   document.getElementById("eventDetailCard").innerHTML = `
-    <strong>Hosted by: ${item.host}</strong>
+    <strong>Hosted by: ${hostMarkup}</strong>
     <div>${item.date}</div>
     <div>${item.time}</div>
     <div>${item.location}</div>
@@ -176,6 +183,7 @@ function openEvent(id) {
     <p>${item.description}</p>
 
     ${item.accessibility ? `<h3>Accessibility / Accommodations:</h3><p>${item.accessibility}</p>` : ""}
+    ${item.flyerName ? `<h3>Event Flyer:</h3><p>${item.flyerName} <em>(prototype filename only)</em></p>` : ""}
     ${item.submitted ? `<p><strong>Prototype-submitted event:</strong> This event was added during the current browser session.</p>` : ""}
   `;
   document.getElementById("statusMessage").textContent = "";
@@ -470,6 +478,9 @@ document.getElementById("submitEventForm").addEventListener("submit", (e) => {
   const startFormatted = formatTime(form.startTime.value);
   const endFormatted = form.endTime.value ? formatTime(form.endTime.value) : "";
   const category = form.eventCategory.value;
+  const flyerFile = form.eventFlyer.files && form.eventFlyer.files[0]
+    ? form.eventFlyer.files[0]
+    : null;
   const id = `submitted-${Date.now()}`;
 
   const newEvent = {
@@ -486,6 +497,7 @@ document.getElementById("submitEventForm").addEventListener("submit", (e) => {
     timeOfDay: inferTimeOfDay(form.startTime.value),
     description: form.eventDescription.value.trim(),
     accessibility: form.accessibilityInfo.value.trim(),
+    flyerName: flyerFile ? flyerFile.name : "",
     contactEmail: form.contactEmail.value.trim(),
     submitted: true
   };
@@ -501,6 +513,7 @@ document.getElementById("submitEventForm").addEventListener("submit", (e) => {
     <div>${newEvent.host}</div>
     <div>${newEvent.dateShort} • ${newEvent.timeShort}</div>
     <div>${newEvent.location}</div>
+    ${newEvent.flyerName ? `<div><strong>Flyer selected:</strong> ${newEvent.flyerName}</div>` : ""}
   `;
 
   form.reset();

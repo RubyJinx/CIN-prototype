@@ -463,3 +463,53 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
     transition: none !important;
   }
 }
+
+
+/* Stakeholder-review refinements */
+.inline-link {
+  border: 0;
+  background: transparent;
+  color: var(--cwu-red);
+  padding: 0;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.inline-link:hover {
+  color: var(--cwu-red-dark);
+}
+
+.field-help {
+  margin: 5px 0 10px;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #555;
+}
+
+.next-steps {
+  background: #f7f7f7;
+  border-left: 4px solid var(--cwu-red);
+  padding: 10px 12px;
+  margin: 12px 0 16px;
+  text-align: left;
+  font-size: 13px;
+}
+
+.next-steps p {
+  margin: 5px 0 0;
+  line-height: 1.35;
+}
+
+.bottom-nav {
+  border-top: 3px solid var(--cwu-red);
+  box-shadow: 0 -4px 12px rgba(0,0,0,.18);
+}
+
+.bottom-nav button {
+  font-size: 13px;
+}
+
+.bottom-nav button.active {
+  box-shadow: inset 0 4px 0 rgba(255,255,255,.85);
+}
