@@ -519,3 +519,264 @@ button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-
 #organizations > .wide {
   margin-bottom: 18px;
 }
+
+/* Responsive layout update */
+:root {
+  --content-max: 1180px;
+  --reading-max: 760px;
+  --page-gutter: clamp(16px, 3vw, 40px);
+  --section-gap: clamp(18px, 2.5vw, 32px);
+  --body-size: clamp(15px, 0.35vw + 14px, 18px);
+  --small-size: clamp(12px, 0.2vw + 11px, 14px);
+  --title-size: clamp(26px, 2.4vw, 42px);
+  --subhead-size: clamp(18px, 1vw + 15px, 24px);
+}
+
+body {
+  font-size: var(--body-size);
+  line-height: 1.5;
+  background: #ececec;
+}
+
+.phone-shell {
+  width: 100%;
+  max-width: var(--content-max);
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--white);
+  position: relative;
+  padding-bottom: 72px;
+  overflow-x: hidden;
+  box-shadow: 0 0 24px rgba(0,0,0,.08);
+}
+
+.topbar {
+  min-height: clamp(66px, 8vw, 88px);
+  padding-inline: var(--page-gutter);
+}
+
+.brand-short { font-size: clamp(20px, 1.2vw + 16px, 28px); }
+.brand-long { font-size: clamp(16px, 0.8vw + 13px, 22px); }
+
+.menu-btn {
+  right: var(--page-gutter);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(24px, 1vw + 20px, 30px);
+}
+
+.prototype-banner {
+  padding: 9px var(--page-gutter);
+  font-size: var(--small-size);
+  line-height: 1.45;
+}
+
+.screen {
+  padding: var(--section-gap) var(--page-gutter) clamp(30px, 4vw, 54px);
+}
+
+.hero,
+.page-title,
+.detail-title,
+.search-summary,
+.status-message,
+.empty-state {
+  max-width: var(--reading-max);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero h1 {
+  font-size: var(--title-size);
+  line-height: 1.08;
+}
+
+.hero p {
+  width: min(100%, 680px);
+  font-size: var(--body-size);
+  line-height: 1.55;
+}
+
+.page-title { font-size: clamp(26px, 2vw + 18px, 38px); }
+.detail-title { font-size: clamp(22px, 1.5vw + 16px, 32px); }
+
+.section-title,
+.list-heading,
+.result-group-title {
+  font-size: var(--subhead-size);
+}
+
+.primary,
+.secondary,
+.back-btn,
+.mini-btn,
+.action-btn,
+.bottom-nav button {
+  min-height: 44px;
+}
+
+.wide,
+.search-card,
+.search-bar,
+.action-row,
+.filters-panel,
+.calendar-toggle,
+.event-form,
+.interest-form,
+.detail-card,
+.card.compact,
+.event-card,
+.org-card,
+.success-panel {
+  width: min(100%, var(--reading-max));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-card { max-width: 680px; }
+.search-bar { max-width: 620px; }
+.action-row,
+.calendar-toggle { max-width: 620px; }
+
+.detail-card,
+.event-form,
+.interest-form {
+  padding: clamp(16px, 2.5vw, 28px);
+}
+
+.event-card,
+.org-card,
+.card.compact {
+  padding: clamp(12px, 1.8vw, 18px);
+}
+
+.event-form input,
+.event-form select,
+.event-form textarea,
+.interest-form input,
+.home-search input,
+.search-bar input {
+  font-size: 1rem;
+}
+
+.detail-card p,
+.event-card,
+.org-card,
+.submitted-summary,
+.prototype-banner {
+  overflow-wrap: anywhere;
+}
+
+.bottom-nav {
+  width: min(100%, var(--content-max));
+  height: 64px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.bottom-nav button {
+  font-size: clamp(13px, 0.35vw + 12px, 16px);
+}
+
+.calendar-grid {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+  gap: clamp(3px, 0.6vw, 8px);
+}
+
+.calendar-grid .weekday,
+.calendar-day {
+  min-height: clamp(42px, 6vw, 64px);
+}
+
+.calendar-grid .weekday {
+  font-size: clamp(11px, 0.35vw + 10px, 14px);
+}
+
+@media (min-width: 700px) {
+  body { padding: 24px; }
+
+  .phone-shell {
+    min-height: calc(100vh - 48px);
+    border-radius: 18px;
+  }
+
+  .screen {
+    padding-top: clamp(28px, 4vw, 48px);
+  }
+
+  .form-row { gap: 16px; }
+
+  #eventList,
+  #orgList,
+  #globalResults {
+    width: min(100%, 900px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 980px) {
+  body { padding: 32px; }
+
+  .phone-shell {
+    min-height: calc(100vh - 64px);
+  }
+
+  .screen {
+    padding-left: clamp(48px, 6vw, 88px);
+    padding-right: clamp(48px, 6vw, 88px);
+  }
+
+  #eventList,
+  #orgList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    align-items: start;
+  }
+
+  .event-card,
+  .org-card {
+    margin-bottom: 0;
+    height: 100%;
+  }
+
+  #globalResults { max-width: 900px; }
+
+  .drawer {
+    width: min(360px, 32vw);
+  }
+}
+
+@media (min-width: 1400px) {
+  .phone-shell { max-width: 1280px; }
+  .bottom-nav { max-width: 1280px; }
+}
+
+@media (max-width: 420px) {
+  .brand-long { font-size: 15px; }
+  .prototype-banner { font-size: 11px; }
+
+  .screen {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .wide,
+  .search-card,
+  .search-bar,
+  .action-row,
+  .filters-panel,
+  .calendar-toggle {
+    width: 100%;
+  }
+
+  .form-row { grid-template-columns: 1fr; }
+  .detail-action { width: 100%; }
+  .bottom-nav button { font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

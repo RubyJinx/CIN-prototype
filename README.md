@@ -34,3 +34,18 @@ GitHub Pages should redeploy automatically.
 - Added explanations for event discovery, organizations, submissions, simulated workflows, and calendar limitations.
 - Added project contact email: Karina.Taylor@cwu.edu.
 - Retained clear prototype disclaimers so users understand CIN is not an official CWU service.
+
+
+## Responsive layout update
+The prototype is now mobile-first and responsive across phones, tablets, laptops, and desktop displays.
+
+Key changes:
+- The app expands beyond the original 390px phone shell on larger screens.
+- Font sizes scale with the viewport while remaining within readable limits.
+- Reading-heavy sections use a controlled maximum line width.
+- Desktop event and organization directories use two-column card grids.
+- Forms, search controls, calendar, and navigation resize for available space.
+- Bottom navigation follows the app width on all devices.
+- Small-phone layouts collapse two-column form rows to a single column.
+- Long email addresses and links wrap instead of overflowing.
+- Reduced-motion preferences remain supported.
